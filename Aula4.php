@@ -24,12 +24,55 @@ for ($x = 50; $x > 1; $x --) {
         echo ($x);
     }
 }
+        echo "<br>"; 
+        echo "<br>"; 
 
-for ($y = 20; $y > 1; $y --) {
-    $PrimeiraEtapa = $x % 2 ;
-    $SegundaEtapa = $x % 3 ;
-    if ($PrimeiraEtapa != 0) {
-    } else if ($SegundaEtapa != 0) {
-         echo $y;
+for ($N = 1; $N < 100 ; $N ++) {
+$ehPrimo = true;
+$penultimo = $N - 1;
+    for($divisor= 2; $divisor <= $penultimo; $divisor++){
+        $resto = $N % $divisor;
+        $naoehPrimo = $resto == 0;
+        if ($naoehPrimo) {
+            $ehPrimo =  false;
+            break;
+        
+        }
+    }
+    if ($ehPrimo) {
+        echo $N;
+        echo "<br>";
     }
 }
+        echo "<br>";
+
+$funcionarios = ["Ariel","Jão","Maria"];
+
+foreach ($funcionarios as $funcionarios) {
+    echo $funcionarios . "<br>";
+}
+
+$funcionariosAssociativos = [
+    "nome" => "Ariel",
+    "cargo" => "Professor", 
+ ] ;
+
+ $PrimeiroFuncionario = [
+    "nome" => "Pietro",
+    "setor" => "RH", 
+    "Salário" => 15,
+    "descontoINSS" => "230"
+ ] ;
+  foreach ($PrimeiroFuncionario as $idx => $funcionario)
+    echo "$idx: $funcionario" . "<br>";
+
+$porcento = $PrimeiroFuncionario["Salário"] * 10;
+$Final = $porcento / 100;
+$Aumento = $PrimeiroFuncionario["Salário"] + $Final;
+echo real($Aumento) ;
+
+function real(float $valor){
+    echo number_format($valor,2,",",".");
+}
+
+echo "<br>";
