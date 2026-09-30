@@ -11,11 +11,12 @@ $resultado = $conexao->query($sql);
 <h1>Funcionários</h1>
 
 <a href="form-funcionario.php">Novo Funcionário</a>
+
 <br><br>
 
 <?php
 
-if (empty($resultado)){
+    if (empty($resultado)){
 ?>
 
 <p>Sem dados para exibir</p>
@@ -30,12 +31,12 @@ if (empty($resultado)){
         <th>Salário</th>
         <th>Cargo</th>
         <th>Setor</th>
-        <th>Crachá</th>
         <th>Ações</th>
     </tr>
     <?php
         while($funcionario = $resultado->fetch_assoc()) {
             $objFuncionario = (object) $funcionario; 
+            $idFuncionario =  $objFuncionario->id;
     ?>
     <tr>
         <td><?=  $objFuncionario->id ?></td>
@@ -44,6 +45,10 @@ if (empty($resultado)){
         <td><?=  $objFuncionario->salario ?></td>
         <td><?=  $objFuncionario->setor ?></td>
         <td><?=  $objFuncionario->cracha ?></td>
+        <td>
+            <a href = "editar-funcionairo.php?id=<?php echo $idFuncionario?>">Adicionar</a>
+            <a href = "excluir-funcionario.php?id=<?php echo $idFuncionario ?>">Excluir</a>
+        </td>
     </tr>
     <?php } ?>
 </table>
