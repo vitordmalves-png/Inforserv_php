@@ -12,7 +12,7 @@ class FuncionariEntity{
     {
         $funcionario = new self();
 
-        $funcionario->prrencher($dados);
+        $funcionario->preencher($dados);
 
         return $funcionario;
     }
