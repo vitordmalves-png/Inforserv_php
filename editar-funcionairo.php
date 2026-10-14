@@ -1,32 +1,75 @@
 <?php
 
+require_once "./conexao.php";
+
 $idFuncionario = $_REQUEST["id"] ?? 0;
 
-require_once "conexao.php";
-
-$sql = "SELECT * FROM funcionario";
+$sql = "SELECT * FROM funcionario WHERE id=$idFuncionario LIMIT 1;";
 
 $resultado = $conexao->query($sql);
 
 $funcionario = (object) $resultado->fetch_assoc() ?? null;
 
+$encontrouFuncionario = $funcionario->nome ?? "";
 
 ?>
 
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<form method="POST" action="atualizar_funcionario.php">
-    <h1>Editar</h1>
-    <label for="nome">Nome:</label>
-    <input type="text" hidden name="id" value=<?=$idFuncionario ?>>
-    <input type="text" id="nome" name="nome" placeholder="Digite seu nome aqui" value="<?= $funcionario->nome ?>">
-    <button type="submit">Enviar</button>
-</form>
+<h1>Editar Funcionário</h1>
 
-</html>
+<br>
 
+<?php 
+    if (empty($encontrouFuncionario)) {
+ ?>
+ 
+ <p>Funcionário não encontrado.</p>
+
+ <?php } else { ?>
+    <form method="POST" action="atualizar-funcionario.php">
+        <div>
+            <label for="id" class="form-label">ID</label>
+            <input type="text" name="id" id="id" readonly aria-readonly="true" value="<?=  $funcionario->id ?>">
+        </div>
+        <br>
+
+        <div>
+            <label for="nome" class="form-label">Nome</label>
+            <input type="text" name="nome" id="nome" value="<?=  $funcionario->nome ?>">
+        </div>
+        <br>
+
+        <div>
+            <label for="sobrenome">Sobrenome</label>
+            <input class="form-control" type="text" name="sobrenome" id="sobrenome" value="<?=  $funcionario->sobrenome ?>">
+        </div>
+        <br>
+
+        <div>
+            <label for="cargo">Cargo</label>
+            <input class="form-control" type="text" name="cargo" id="cargo" value="<?=  $funcionario->cargo ?>">
+        </div>
+        <br>
+
+        <div>
+            <label for="setor">Setor</label>
+            <input class="form-control" type="text" name="setor" id="setor" value="<?=  $funcionario->setor ?>">
+        </div>
+        <br>
+
+        <div>
+            <label for="salario">Salário</label>
+            <input class="form-control" type="text" name="salario" id="salario" value="<?=  $funcionario->salario ?>">
+        </div>
+        <br>
+
+        <div>
+            <label for="cracha">Crachá</label>
+            <input class="form-control" type="text" name="cracha" id="cracha" value="<?=  $funcionario->cracha ?>">
+        </div>
+        <br>
+        
+        <div>
+            <button class="btn btn-primary" type="submit">Salvar</button>
+        </div>
+    </form>
+ <?php } ?>

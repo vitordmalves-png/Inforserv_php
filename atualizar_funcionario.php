@@ -1,36 +1,59 @@
 <?php
 
-$idFuncionario = $_REQUEST["id"] ?? 0;
+require_once "./conexao.php";
 
-$nome = $_POST["nome"] ??"";
-$salario = $_POST["salario"] ?? 0;
-$cracha = $_POST["cracha"] ?? "";
+$idFuncionario = $_POST["id"] ?? 0;
+$nome = $_POST["nome"] ?? "";
 $sobrenome = $_POST["sobrenome"] ?? "";
+$cargo = $_POST["cargo"] ?? "";
 $setor = $_POST["setor"] ?? "";
+$salario = $_POST["salario"] ?? "";
+$cracha = $_POST["cracha"] ?? "";
 
-require_once "conexao.php";
+if (empty($idFuncionario)) {
+    retornarParaListagem();
+}
 
-$sql = "UPDATE infoserv.funcionario
-SET nome='$nome', salario='$salario', cracha='$cracha', sobrenome='$sobrenome', setor='$setor'
-WHERE id=$idFuncionario ";
+if (empty($nome)) {
+    retornarParaListagem();
+}
+
+if (empty($sobrenome)) {
+    retornarParaListagem();
+}
+
+if (empty($cargo)) {
+    retornarParaListagem();
+}
+
+if (empty($setor)) {
+    retornarParaListagem();
+}
+
+if (empty($salario)) {
+    retornarParaListagem();
+}
+
+if (empty($cracha)) {
+    retornarParaListagem();
+}
+
+/**
+ * UPDATE funcionario SET nome='', sobrenome='', salario=0, cargo='', setor='', cracha='' WHERE id=$idFuncionario LIMIT 1;
+ */
+
+$sql = "UPDATE funcionario SET "; 
+$camposUpdate = "nome='$nome', sobrenome='$sobrenome', salario='$salario', cargo='$cargo', setor='$setor', cracha='$cracha' ";
+$where = "WHERE id=$idFuncionario LIMIT 1;";
+
+$sql .= $camposUpdate;
+$sql .= $where;
 
 $resultado = $conexao->query($sql);
 
-$funcionario = (object) $resultado->fetch_assoc() ?? null;
+retornarParaListagem();
 
-sleep(10);
-header("location: listar-funcinarios.php");
-
-function invalido($valor) {
-    if (empty($valor)) {
-        header("location: listar-funcinarios.php");
-        exit;
-    }
-};
-invalido($nome);
-invalido($salario);
-invalido($cracha);
-invalido($setor);
-
-
-
+function retornarParaListagem() {
+    header("Location: listar-funcionarios.php");
+    exit;
+}
